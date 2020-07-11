@@ -1,0 +1,1900 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Conduit API Tests",
+    "_postman_id": "dda3e595-02d7-bf12-2a43-3daea0970192",
+    "description": "Collection for testing the Conduit API\n\nhttps://github.com/gothinkster/realworld",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [{
+      "name": "Auth",
+      "description": "",
+      "item": [{
+          "name": "Register",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "let user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\", \"username\":\"johnjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "let user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Login and Remember Token",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "let user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                "",
+                "if(tests['User has \"token\" property']){",
+                "    postman.setEnvironmentVariable('token', user.token);",
+                "}",
+                "",
+                "tests['Environment variable \"token\" has been set'] = environment.token === user.token;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Current User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "let user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "let user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "PUT",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Jobs with authentication",
+      "description": "",
+      "item": [{
+          "name": "Feed",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/feed",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All Jobs",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All Jobs with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs by Creator",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?creator=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "creator",
+                "value": "johnjacob"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs by Creator with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?creator=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "creator",
+                "value": "johnjacob",
+                "equals": true,
+                "description": ""
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs Favorited by Username",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs Favorited by Username with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs by Tag",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?tag=dragons",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "tag",
+                "value": "dragons"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Create Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "if(tests['Job has \"slug\" property']){",
+                "    postman.setEnvironmentVariable('slug', job.slug);",
+                "}",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"job\":{\"title\":\"How to train your dragon\", \"description\":\"Ever wonder how?\", \"body\":\"Very carefully.\", \"tagList\":[\"dragons\",\"training\"]}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Single Job by slug",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Update Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}",
+            "method": "PUT",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"job\":{\"body\":\"With two hands\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Favorite Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests[\"Job's 'favorited' property is true\"] = job.favorited === true;",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "tests[\"Job's 'favoritesCount' property is greater than 0\"] = job.favoritesCount > 0;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}/favorite",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Unfavorite Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "tests[\"Job's \\\"favorited\\\" property is true\"] = job.favorited === false;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}/favorite",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "description": "",
+      "item": [{
+          "name": "All Jobs",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs by Creator",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?creator=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "creator",
+                "value": "johnjacob"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs Favorited by Username",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Jobs by Tag",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"jobs\" property'] = responseJSON.hasOwnProperty('jobs');",
+                "    tests['Response contains \"jobsCount\" property'] = responseJSON.hasOwnProperty('jobsCount');",
+                "    tests['jobsCount is an integer'] = Number.isInteger(responseJSON.jobsCount);",
+                "",
+                "    if(responseJSON.jobs.length){",
+                "        let job = responseJSON.jobs[0];",
+                "",
+                "        tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "        tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "        tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "        tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "        tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "        tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "        tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "        tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "        tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "        tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "        tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "        tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "        tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                "    } else {",
+                "        tests['jobsCount is 0 when feed is empty'] = responseJSON.jobsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/jobs?tag=dragons",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [{
+                "key": "tag",
+                "value": "dragons"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Single Job by slug",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"job\" property'] = responseJSON.hasOwnProperty('job');",
+                "",
+                "let job = responseJSON.job || {};",
+                "",
+                "tests['Job has \"title\" property'] = job.hasOwnProperty('title');",
+                "tests['Job has \"slug\" property'] = job.hasOwnProperty('slug');",
+                "tests['Job has \"body\" property'] = job.hasOwnProperty('body');",
+                "tests['Job has \"createdAt\" property'] = job.hasOwnProperty('createdAt');",
+                "tests['Job\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(job.createdAt).toISOString() === job.createdAt;",
+                "tests['Job has \"updatedAt\" property'] = job.hasOwnProperty('updatedAt');",
+                "tests['Job\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(job.updatedAt).toISOString() === job.updatedAt;",
+                "tests['Job has \"description\" property'] = job.hasOwnProperty('description');",
+                "tests['Job has \"tagList\" property'] = job.hasOwnProperty('tagList');",
+                "tests['Job\\'s \"tagList\" property is an Array'] = Array.isArray(job.tagList);",
+                "tests['Job has \"creator\" property'] = job.hasOwnProperty('creator');",
+                "tests['Job has \"favorited\" property'] = job.hasOwnProperty('favorited');",
+                "tests['Job has \"favoritesCount\" property'] = job.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(job.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "description": "",
+      "item": [{
+          "name": "All Comments for Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let is200Response = responseCode.code === 200",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"comments\" property'] = responseJSON.hasOwnProperty('comments');",
+                "",
+                "    if(responseJSON.comments.length){",
+                "        let comment = responseJSON.comments[0];",
+                "",
+                "        tests['Comment has \"id\" property'] = comment.hasOwnProperty('id');",
+                "        tests['Comment has \"body\" property'] = comment.hasOwnProperty('body');",
+                "        tests['Comment has \"createdAt\" property'] = comment.hasOwnProperty('createdAt');",
+                "        tests['\"createdAt\" property is an ISO 8601 timestamp'] = new Date(comment.createdAt).toISOString() === comment.createdAt;",
+                "        tests['Comment has \"updatedAt\" property'] = comment.hasOwnProperty('updatedAt');",
+                "        tests['\"updatedAt\" property is an ISO 8601 timestamp'] = new Date(comment.updatedAt).toISOString() === comment.updatedAt;",
+                "        tests['Comment has \"creator\" property'] = comment.hasOwnProperty('creator');",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}/comments",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Create Comment for Job",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "let responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"comment\" property'] = responseJSON.hasOwnProperty('comment');",
+                "",
+                "let comment = responseJSON.comment || {};",
+                "",
+                "tests['Comment has \"id\" property'] = comment.hasOwnProperty('id');",
+                "tests['Comment has \"body\" property'] = comment.hasOwnProperty('body');",
+                "tests['Comment has \"createdAt\" property'] = comment.hasOwnProperty('createdAt');",
+                "tests['\"createdAt\" property is an ISO 8601 timestamp'] = new Date(comment.createdAt).toISOString() === comment.createdAt;",
+                "tests['Comment has \"creator\" property'] = comment.hasOwnProperty('creator');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}/comments",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"comment\":{\"body\":\"Thank you so much!\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment for Job",
+          "request": {
+            "url": "{{apiUrl}}/jobs/{{slug}}/comments/1",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profiles",
+      "description": "",
+      "item": [{
+          "name": "Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    let profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Follow Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    let profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "    tests['Profile\\'s \"following\" property is true'] = profile.following === true;",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob/follow",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Unfollow Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "let is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    let responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    let profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "    tests['Profile\\'s \"following\" property is false'] = profile.following === false;",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob/follow",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "description": "",
+      "item": [{
+        "name": "All Tags",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let is200Response = responseCode.code === 200;",
+              "",
+              "tests['Response code is 200 OK'] = is200Response;",
+              "",
+              "if(is200Response){",
+              "    let responseJSON = JSON.parse(responseBody);",
+              "    ",
+              "    tests['Response contains \"tags\" property'] = responseJSON.hasOwnProperty('tags');",
+              "    tests['\"tags\" property returned as array'] = Array.isArray(responseJSON.tags);",
+              "}",
+              ""
+            ]
+          }
+        }],
+        "request": {
+          "url": "{{apiUrl}}/tags",
+          "method": "GET",
+          "header": [{
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": ""
+            },
+            {
+              "key": "X-Requested-With",
+              "value": "XMLHttpRequest",
+              "description": ""
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        },
+        "response": []
+      }]
+    },
+    {
+      "name": "Cleanup",
+      "description": "",
+      "item": [{
+        "name": "Delete Job",
+        "request": {
+          "url": "{{apiUrl}}/jobs/{{slug}}",
+          "method": "DELETE",
+          "header": [{
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": ""
+            },
+            {
+              "key": "X-Requested-With",
+              "value": "XMLHttpRequest",
+              "description": ""
+            },
+            {
+              "key": "Authorization",
+              "value": "Token {{token}}",
+              "description": ""
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        },
+        "response": []
+      }]
+    }
+  ]
+}
