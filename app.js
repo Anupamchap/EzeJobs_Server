@@ -10,6 +10,7 @@ let http = require('http'),
     mongoose = require('mongoose');
 
 
+
 let isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
